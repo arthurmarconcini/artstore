@@ -4,11 +4,15 @@ import { cn } from "@/lib/utils";
 
 const Card = React.forwardRef<
   HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => (
+  React.HTMLAttributes<HTMLDivElement> & { isHeader: boolean }
+>(({ className, isHeader, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("border bg-card text-card-foreground shadow-sm", className)}
+    className={cn(
+      "border bg-card text-card-foreground shadow-sm",
+      isHeader ? "" : "rounded-lg", // Adicione esta condição
+      className,
+    )}
     {...props}
   />
 ));
