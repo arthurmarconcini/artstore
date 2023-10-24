@@ -12,11 +12,19 @@ import {
   ShoppingCartIcon,
 } from "lucide-react";
 import { Sheet, SheetContent, SheetHeader, SheetTrigger } from "./sheet";
-import { signIn } from "next-auth/react";
+import { signIn, signOut, useSession } from "next-auth/react";
+import { Avatar, AvatarImage } from "./avatar";
+import { AvatarFallback } from "@radix-ui/react-avatar";
+import { Separator } from "@radix-ui/react-separator";
 
 const Header: React.FC = () => {
+  const { data, status } = useSession();
+
   const handleLoginClick = async () => {
     await signIn();
+  };
+  const handleLogoutClick = async () => {
+    await signOut();
   };
 
   return (
@@ -32,15 +40,46 @@ const Header: React.FC = () => {
             <SheetHeader className="text-md text-left font-bold">
               Menu
             </SheetHeader>
+
+            {status === "authenticated" && data?.user && (
+              <div className="flex flex-col">
+                <div className="flex items-center gap-4 py-2">
+                  <Avatar>
+                    {data.user.image && <AvatarImage src={data.user.image} />}
+                    <AvatarFallback>
+                      {data.user.name?.[0].toLocaleUpperCase()}
+                    </AvatarFallback>
+                  </Avatar>
+                  <div>
+                    <h1 className="font-medium">{data.user.name}</h1>
+                    <h2 className="text-sm opacity-75">Boas compras!</h2>
+                  </div>
+                </div>
+                <Separator />
+              </div>
+            )}
+
             <div className="flex flex-col gap-4">
-              <Button
-                onClick={handleLoginClick}
-                variant={"outline"}
-                className="flex justify-start gap-2"
-              >
-                <LogInIcon size={16} />
-                Fazer Login
-              </Button>
+              {status === "authenticated" ? (
+                <Button
+                  onClick={handleLogoutClick}
+                  variant={"outline"}
+                  className="flex justify-start gap-2"
+                >
+                  <LogInIcon size={16} />
+                  Fazer Logout
+                </Button>
+              ) : (
+                <Button
+                  onClick={handleLoginClick}
+                  variant={"outline"}
+                  className="flex justify-start gap-2"
+                >
+                  <LogInIcon size={16} />
+                  Fazer Login
+                </Button>
+              )}
+
               <Button variant={"outline"} className="flex justify-start gap-2">
                 <HomeIcon size={16} />
                 Início
