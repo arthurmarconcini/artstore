@@ -29,7 +29,7 @@ async function Home() {
   });
 
   return (
-    <main className="flex flex-col items-center gap-7 py-7">
+    <div className="flex flex-col items-center gap-7 py-7">
       <Banner
         src="/banner-home-01.png"
         alt="Até 55% de desconto apenas esté mês."
@@ -47,7 +47,7 @@ async function Home() {
         alt="Até 55% de desconto apenas esté mês."
       />
       <ProductList products={mouses} title="Mouses" />
-    </main>
+    </div>
   );
 }
 
