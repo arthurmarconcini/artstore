@@ -9,12 +9,12 @@ interface ProductItemProps {
 
 function ProductItem({ product }: ProductItemProps) {
   return (
-    <div className=" relative flex flex-col gap-4">
-      <Badge className=" absolute left-2 top-2 flex items-center px-2 py-[2px]">
+    <div className="relative flex flex-col gap-4">
+      <Badge className=" absolute left-2 top-2 flex gap-[2px] px-2 py-[2px]">
         <ArrowDown size={16} />
         <span className="text-end text-sm">{product.discountPercentage}%</span>
       </Badge>
-      <div className="flex h-[170px] w-[156px] items-center justify-center overflow-hidden rounded-lg bg-accent">
+      <div className="flex h-[170px] w-full items-center justify-center overflow-hidden rounded-lg bg-accent">
         <Image
           src={product.imageUrls[0]}
           alt={product.description}
