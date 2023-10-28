@@ -110,11 +110,13 @@ const Header: React.FC = () => {
             </div>
           </SheetContent>
         </Sheet>
+        <Link href="/">
+          <h1 className="text-lg font-medium">
+            <span className="font-bold text-primary">ART </span>
+            Store
+          </h1>
+        </Link>
 
-        <h1 className="text-lg font-medium">
-          <span className="font-bold text-primary">ART </span>
-          Store
-        </h1>
         <Button variant={"outline"}>
           <ShoppingCartIcon />
         </Button>
