@@ -3,6 +3,7 @@ import Image from "next/image";
 import { Badge } from "./badge";
 import { ArrowDown } from "lucide-react";
 import Link from "next/link";
+import DiscountBadge from "./discount-badge";
 
 interface ProductItemProps {
   product: DiscountedProduct;
@@ -12,12 +13,12 @@ function ProductItem({ product }: ProductItemProps) {
   return (
     <Link href={`/produto/${product.slug}`}>
       <div className="relative flex flex-col gap-4">
-        <Badge className=" absolute left-2 top-2 flex gap-[2px] px-2 py-[2px]">
-          <ArrowDown size={16} />
-          <span className="text-end text-sm">
+        {product.discountPercentage > 0 && (
+          <DiscountBadge className="absolute left-2 top-2">
             {product.discountPercentage}%
-          </span>
-        </Badge>
+          </DiscountBadge>
+        )}
+
         <div className="flex h-[170px] w-full items-center justify-center overflow-hidden rounded-lg bg-accent">
           <Image
             src={product.imageUrls[0]}

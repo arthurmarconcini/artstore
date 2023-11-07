@@ -1,10 +1,10 @@
 "use client";
 
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import DiscountBadge from "@/components/ui/discount-badge";
 import { DiscountedProduct } from "@/helpers/calculateDiscountPrice";
 
-import { ArrowDownIcon, ChevronLeft, ChevronRight, Truck } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
 
@@ -38,10 +38,7 @@ function ProductDetails({ product }: ProductDetailsProps) {
             <h1 className="text-2xl font-bold">
               R$ {product.finalPrice.toFixed(2).replace(".", ",")}
             </h1>
-            <Badge className="h-6 p-1.5">
-              <ArrowDownIcon size={14} />
-              <p className="text-xs">{product.discountPercentage}%</p>
-            </Badge>
+            <DiscountBadge>{product.discountPercentage}%</DiscountBadge>
           </div>
           <p className="flex gap-1 text-sm opacity-60">
             <span>De:</span>
