@@ -97,7 +97,7 @@ const Header: React.FC = () => {
               </Button>
 
               <SheetClose asChild>
-                <Link href="/categories">
+                <Link href="/catalogo">
                   <Button
                     variant={"outline"}
                     className="flex w-full justify-start gap-2"

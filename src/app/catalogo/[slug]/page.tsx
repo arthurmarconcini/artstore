@@ -1,9 +1,9 @@
-import { Badge } from "@/components/ui/badge";
 import BadgeTitle from "@/components/ui/badge-title";
 import ProductItem from "@/components/ui/product-item";
 import { CATEGORIES_ICONS } from "@/constants/CategoryIcons";
 import calculateDiscountPrice from "@/helpers/calculateDiscountPrice";
 import { prismaClient } from "@/lib/prisma";
+import Link from "next/link";
 
 async function CategoryPage({ params }: any) {
   const products = await prismaClient.product.findMany({
@@ -25,10 +25,9 @@ async function CategoryPage({ params }: any) {
       <div className="grid grid-cols-2 gap-x-4 gap-y-7">
         {products.map((product) => {
           return (
-            <ProductItem
-              key={product.id}
-              product={calculateDiscountPrice(product)}
-            />
+            <Link key={product.id} href={`/produto/${product.slug}`}>
+              <ProductItem product={calculateDiscountPrice(product)} />
+            </Link>
           );
         })}
       </div>

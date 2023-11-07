@@ -18,7 +18,7 @@ async function CategoriesPage() {
       <div className="grid grid-cols-2 gap-7  ">
         {categories.map((category) => {
           return (
-            <Link key={category.id} href={`/categories/${category.slug}`}>
+            <Link key={category.id} href={`/catalogo/${category.slug}`}>
               <div className="flex w-full flex-col overflow-hidden rounded-lg ">
                 <div className="flex h-36 w-full items-center justify-center bg-category-item-gradient">
                   <Image
