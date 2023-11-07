@@ -1,5 +1,5 @@
 import Categories from "./components/Categories";
-import ProductList from "./components/ProductList";
+import ProductList from "../../components/ui/product-list";
 import { prismaClient } from "@/lib/prisma";
 import Banner from "./components/Banner";
 
