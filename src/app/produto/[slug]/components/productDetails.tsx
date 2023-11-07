@@ -3,6 +3,7 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { DiscountedProduct } from "@/helpers/calculateDiscountPrice";
+
 import { ArrowDownIcon, ChevronLeft, ChevronRight, Truck } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";

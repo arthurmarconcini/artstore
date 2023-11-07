@@ -3,7 +3,6 @@ import ImageView from "./components/ImageView";
 import ProductDetails from "./components/productDetails";
 import calculateDiscountPrice from "@/helpers/calculateDiscountPrice";
 import ProductList from "@/components/ui/product-list";
-import { Product } from "@prisma/client";
 
 async function Product({ params }: any) {
   const product = await prismaClient.product.findFirst({
@@ -11,21 +10,29 @@ async function Product({ params }: any) {
       slug: params.slug,
     },
     include: {
-      category: true,
+      category: {
+        include: {
+          products: {
+            where: {
+              slug: {
+                not: params.slug,
+              },
+            },
+          },
+        },
+      },
     },
   });
 
-  const relatedProducts: Product[] = await prismaClient.product.findMany({
-    where: {
-      categoryId: product?.categoryId,
-    },
-  });
+  if (!product) {
+    return null;
+  }
 
   return (
     <section className="mb-7">
       <ImageView imageUrls={product!.imageUrls}></ImageView>
-      <ProductDetails product={calculateDiscountPrice(product!)} />
-      <ProductList title="Recomendados" products={relatedProducts} />
+      <ProductDetails product={calculateDiscountPrice(product)} />
+      <ProductList title="Recomendados" products={product.category.products} />
     </section>
   );
 }

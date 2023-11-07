@@ -25,9 +25,10 @@ async function CategoryPage({ params }: any) {
       <div className="grid grid-cols-2 gap-x-4 gap-y-7">
         {products.map((product) => {
           return (
-            <Link key={product.id} href={`/produto/${product.slug}`}>
-              <ProductItem product={calculateDiscountPrice(product)} />
-            </Link>
+            <ProductItem
+              key={product.id}
+              product={calculateDiscountPrice(product)}
+            />
           );
         })}
       </div>
