@@ -3,26 +3,33 @@
 import { Button } from "@/components/ui/button";
 import DiscountBadge from "@/components/ui/discount-badge";
 import { DiscountedProduct } from "@/helpers/calculateDiscountPrice";
+import { useCart } from "@/providers/cart";
 
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
 
 interface ProductDetailsProps {
-  product: Pick<
-    DiscountedProduct,
-    "name" | "discountPercentage" | "description" | "basePrice" | "finalPrice"
-  >;
+  product: DiscountedProduct;
 }
 
 function ProductDetails({ product }: ProductDetailsProps) {
   const [quantity, setQuantity] = useState(1);
+
+  const { addToCart } = useCart();
 
   function handleQuantityDecrease() {
     setQuantity((prev) => (prev > 1 ? prev - 1 : 1));
   }
   function handleQuantityIncrease() {
     setQuantity((prev) => prev + 1);
+  }
+
+  function handleAddProductToCart(
+    product: DiscountedProduct,
+    quantity: number,
+  ) {
+    addToCart(product, quantity);
   }
 
   return (
@@ -70,7 +77,10 @@ function ProductDetails({ product }: ProductDetailsProps) {
         </h2>
       </div>
       <div className="flex flex-col gap-5 ">
-        <Button className="text-sm font-bold uppercase">
+        <Button
+          className="text-sm font-bold uppercase"
+          onClick={() => handleAddProductToCart(product, quantity)}
+        >
           Adiconar ao carrinho
         </Button>
         <div className="flex items-center justify-between rounded-lg bg-accent  px-7 py-3">
@@ -88,7 +98,7 @@ function ProductDetails({ product }: ProductDetailsProps) {
                 Entrega via <span className="font-bold italic">ASPacket</span>
               </p>
               <p className="text-xs text-primary">
-                Entrega para todo o{" "}
+                Entrega para todo o
                 <span className="font-bold italic">Brasil</span>
               </p>
             </div>

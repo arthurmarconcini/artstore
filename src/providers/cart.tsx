@@ -14,9 +14,15 @@ interface CartItem {
 const CartContext = createContext<{
   cart: CartItem[];
   addToCart: (product: DiscountedProduct, quantity: number) => void;
+  increaseQuantity: (productId: string) => void;
+  decreaseQuantity: (productId: string) => void;
+  removeToCart: (productId: string) => void;
 }>({
   cart: [],
   addToCart: () => {},
+  increaseQuantity: () => {},
+  decreaseQuantity: () => {},
+  removeToCart: () => {},
 });
 
 // Definindo um provedor para o contexto
@@ -26,6 +32,12 @@ interface CartProviderProps {
 
 const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
   const [cart, setCart] = useState<CartItem[]>([]);
+
+  const removeToCart = (productId: string) => {
+    setCart((prev) => {
+      return prev.filter(({ product }) => product.id !== productId);
+    });
+  };
 
   const addToCart = (product: DiscountedProduct, quantity: number) => {
     setCart((prevCart) => {
@@ -48,8 +60,37 @@ const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
     });
   };
 
+  // Função para aumentar a quantidade de um item no carrinho
+  const increaseQuantity = (productId: string) => {
+    setCart((prevCart) => {
+      return prevCart.map((item) =>
+        item.product.id === productId
+          ? { ...item, quantity: item.quantity + 1 }
+          : item,
+      );
+    });
+  };
+
+  const decreaseQuantity = (productId: string) => {
+    setCart((prevCart) => {
+      return prevCart.map((item) =>
+        item.product.id === productId
+          ? { ...item, quantity: Math.max(item.quantity - 1, 1) } // Não permite que a quantidade seja menor que 1
+          : item,
+      );
+    });
+  };
+
   return (
-    <CartContext.Provider value={{ cart, addToCart }}>
+    <CartContext.Provider
+      value={{
+        cart,
+        addToCart,
+        increaseQuantity,
+        decreaseQuantity,
+        removeToCart,
+      }}
+    >
       {children}
     </CartContext.Provider>
   );
@@ -59,6 +100,9 @@ const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
 const useCart = (): {
   cart: CartItem[];
   addToCart: (product: DiscountedProduct, quantity: number) => void;
+  increaseQuantity: (productId: string) => void;
+  decreaseQuantity: (productId: string) => void;
+  removeToCart: (productId: string) => void;
 } => {
   const context = useContext(CartContext);
   if (!context) {
