@@ -23,6 +23,7 @@ import { Avatar, AvatarImage } from "./avatar";
 import { AvatarFallback } from "@radix-ui/react-avatar";
 import { Separator } from "@radix-ui/react-separator";
 import Link from "next/link";
+import CartSheet from "./cart-sheet";
 
 const Header: React.FC = () => {
   const { data, status } = useSession();
@@ -117,9 +118,7 @@ const Header: React.FC = () => {
           </h1>
         </Link>
 
-        <Button variant={"outline"}>
-          <ShoppingCartIcon />
-        </Button>
+        <CartSheet />
       </CardContent>
     </Card>
   );
